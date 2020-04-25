@@ -1,0 +1,11 @@
+app-bootstrap-grid {
+    
+
+    @media screen and (max-width: 575px){
+        .bootstrap-grid-container {
+            .header-container, .footer-container {
+                display: none;
+            }
+        }
+    }
+}
