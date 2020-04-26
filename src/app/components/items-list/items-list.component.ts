@@ -1,131 +1,136 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { Subject, fromEvent } from "rxjs";
+import { FormControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
+import { Subject } from "rxjs";
 import { takeUntil, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
-import { ItemsListService, ItemsSortBy } from "./items-list.service";
+import { ItemsListService } from "./items-list.service";
+import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-list.entities";
+import { GameDetail } from "../../app.entities";
 import { detectViewChanges } from "../../services/utility";
-import { ItemDetail } from "../../app.entities";
 
 @Component({
-  selector: 'app-items-list',
-  templateUrl: './items-list.component.html',
-  styleUrls: ['./items-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ItemsListService]
+    selector: 'app-items-list',
+    templateUrl: './items-list.component.html',
+    styleUrls: ['./items-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [ItemsListService]
 })
 export class ItemsListComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("gameSearch") private gameSearch: ElementRef;
-  @ViewChild("clearSearch") private clearSearch: ElementRef;
-  @ViewChild("autoComplete") private autoComplete: ElementRef;
+    @ViewChild("autoComplete") private autoComplete: ElementRef;
 
-  private unsubscriber: Subject<any> = new Subject();
-  private loadData: Subject<{
-    sortBy: string;
-    searchTerm?: string;
-  }> = new Subject();
-  items: Array<ItemDetail> = [];
-  autoCompleteList: Array<ItemDetail> = [];
-  sortByOptions = [ItemsSortBy.rank, ItemsSortBy.year];
-  sortBy: ItemsSortBy = ItemsSortBy.rank;
-  showAutoComplete: boolean = false;
-  searchTerm: string = "";
-  showAsGrid: boolean = true;
+    private unsubscriber: Subject<any> = new Subject();
+    private loadData: Subject<{ sortBy: SortBy; searchTerm?: string; }> = new Subject();
+    gameFieldConfig: { array: Array<GameFieldConfig>, map: { [key in GameFieldName]?: GameFieldConfig } };
+    games: Array<GameDetail> = [];
+    autoCompleteList: Array<GameDetail> = [];
+    sortByOptions: Array<{ label: string, value: string }>;
+    sortDirectionOptions: Array<SortDirection>;
+    sortBy: SortBy = null;
+    showAutoComplete: boolean = false;
+    searchTerm: FormControl = new FormControl(null);
+    showAsGrid: boolean = true;
 
-  @HostListener("document:click")
-  documentClick(event) {
-    if (
-      !this.autoComplete ||
-      !this.autoComplete.nativeElement ||
-      !event ||
-      !event.target
-    ) {
-      this.showAutoComplete = false;
-      return;
+    @HostListener("document:click")
+    documentClick(event) {
+        if (
+            !this.autoComplete ||
+            !this.autoComplete.nativeElement ||
+            !event ||
+            !event.target
+        ) {
+            this.showAutoComplete = false;
+            return;
+        }
+
+        if (!this.autoComplete.nativeElement.contains(event.target)) {
+            this.showAutoComplete = false;
+        }
     }
 
-    if (!this.autoComplete.nativeElement.contains(event.target)) {
-      this.showAutoComplete = false;
+    constructor(
+        private itemsListService: ItemsListService,
+        private cdr: ChangeDetectorRef) { }
+
+    ngOnInit() {
+        this.gameFieldConfig = this.itemsListService.gameFieldConfig;
+        this.sortByOptions = this.itemsListService.sortByOptions;
+        this.sortDirectionOptions = this.itemsListService.sortDirectionOptions;
+
+        this.loadData.pipe(
+            switchMap((event: { sortBy: SortBy; searchTerm: string }) => {
+                return this.itemsListService.getItemsList(event && event.sortBy, event && event.searchTerm);
+            }),
+            takeUntil(this.unsubscriber)
+        ).subscribe(data => {
+            this.games = Object.assign([], data && data.filteredGames) || [];
+            this.autoCompleteList = data && data.autoCompleteGames;
+            detectViewChanges(this.cdr);
+        });
+
+        this.searchTerm.valueChanges.pipe(
+            debounceTime(250),
+            distinctUntilChanged(),
+            takeUntil(this.unsubscriber)
+        ).subscribe((searchTerm: string) => {
+            this.showAutoComplete = true;
+            this.refreshData();
+        });
+
+        this.refreshData();
     }
-  }
 
-  constructor(
-    private itemsListService: ItemsListService,
-    private cdr: ChangeDetectorRef) {
+    ngAfterViewInit() {
 
-  }
+    }
 
-  ngOnInit() {
-    this.loadData
-      .pipe(
-        switchMap((event: { sortBy: ItemsSortBy; searchTerm: string }) => {
-          console.log("Switch Map");
-          return this.itemsListService.getItemsList(
-            event && event.sortBy,
-            event && event.searchTerm
-          );
-        }),
-        takeUntil(this.unsubscriber)
-      )
-      .subscribe(data => {
-        this.items = (data && data.filteredGames) || [];
-        this.autoCompleteList = data && data.autoCompleteGames;
+    ngOnDestroy() {
+        this.unsubscriber.next();
+        this.unsubscriber.complete();
+    }
+
+    clearSearch() {
+        this.searchTerm.setValue(null);
+        this.refreshData()
+    }
+
+    refreshData() {
+        this.loadData.next({
+            sortBy: this.sortBy,
+            searchTerm: this.searchTerm.value
+        });
         detectViewChanges(this.cdr);
-      });
-
-    this.refreshData();
-  }
-
-  ngAfterViewInit() {
-    if (this.gameSearch && this.gameSearch.nativeElement) {
-      fromEvent(this.gameSearch.nativeElement, "input")
-        .pipe(
-          debounceTime(300),
-          map((event: any) => event.target.value),
-          distinctUntilChanged(),
-          takeUntil(this.unsubscriber)
-        )
-        .subscribe((searchTerm: string) => {
-          this.searchTerm = searchTerm;
-          this.showAutoComplete = true;
-          this.refreshData();
-        });
     }
 
-    if (this.clearSearch && this.clearSearch.nativeElement) {
-      fromEvent(this.clearSearch.nativeElement, "click")
-        .pipe(takeUntil(this.unsubscriber))
-        .subscribe((searchTerm: string) => {
-          this.searchTerm = null;
-          this.refreshData();
-        });
-    }
-  }
+    selectGame(game: GameDetail) {
+        this.showAutoComplete = false;
+        if (!game) {
+            return;
+        }
 
-  ngOnDestroy() {
-    this.unsubscriber.next();
-    this.unsubscriber.complete();
-  }
-
-  refreshData() {
-    this.loadData.next({
-      sortBy: this.sortBy,
-      searchTerm: this.searchTerm
-    });
-  }
-
-  selectGame(game: ItemDetail) {
-    this.showAutoComplete = false;
-    if (!game) {
-      return;
+        this.searchTerm.setValue(game.title, { emitEvent: false });
+        this.games = [game];
+        detectViewChanges(this.cdr);
     }
 
-    this.searchTerm = game.Name;
-    this.items = [game];
-    detectViewChanges(this.cdr);
-  }
+    onSortChange(event: MatSelectChange, changeType: 'field' | 'direction') {
+        if (!changeType) {
+            return;
+        }
 
-  onSortChange(event) {
-    this.sortBy = event && event.target ? event.target.value : ItemsSortBy.rank;
-    this.refreshData();
-  }
+        if (!this.sortBy) { this.sortBy = {}; }
+
+        switch (changeType) {
+            case 'field':
+                this.sortBy.field = event && event.value || null;
+                if (!this.sortBy.field) { this.sortBy = null }
+                else if (!this.sortBy.direction) { this.sortBy.direction = SortDirection.asc }
+                break;
+            case 'direction':
+                this.sortBy.direction = event && event.value || null;
+                break;
+        }
+
+        this.refreshData();
+    }
 }

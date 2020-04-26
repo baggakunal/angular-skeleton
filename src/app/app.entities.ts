@@ -1,9 +1,9 @@
-export interface ItemDetail {
-  Rank: number;
-  Name: string;
-  Platform: string;
-  Year: number;
-  Genre: string;
-  Publisher: string;
-  Global_Sales: number;
+export interface GameDetail {
+  editors_choice: string;
+  genre: string;
+  platform: string;
+  release_year: number;
+  score: number;
+  title: string;
+  url: string;
 }

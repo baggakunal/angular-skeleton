@@ -2,36 +2,40 @@
     <div class="action-container">
         <div class="game-search">
             <mat-form-field>
-                <input #gameSearch matInput placeholder="Search" [value]="searchTerm">
+                <input matInput placeholder="Search" [formControl]="searchTerm">
             </mat-form-field>
-            <button #clearSearch mat-raised-button color="primary">Clear</button>
+            <button mat-raised-button color="primary" (click)="clearSearch()">Clear</button>
 
             <div #autoComplete class="auto-complete"
                 [hidden]="!searchTerm || !showAutoComplete || !autoCompleteList || !autoCompleteList.length">
-                <div class="auto-complete-row" *ngFor="let game of autoCompleteList" (click)="selectGame(game)">
-                    {{game.Name}}
+                <div class="auto-complete-option" *ngFor="let game of autoCompleteList" (click)="selectGame(game)">
+                    {{game.title}} ({{game.platform}})
                 </div>
             </div>
         </div>
 
         <div class="game-sort">
-            <!-- Sort By:
-
-            <select name="gameSortby" (change)="onSortChange($event)">
-                <option *ngFor="let option of sortByOptions" [value]="option">{{option | uppercase}}</option>
-            </select> -->
-
             <mat-form-field>
                 <mat-label>Sort By</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let option of sortByOptions" [value]="option">
-                        {{option | uppercase}}
+                <mat-select [value]="sortBy && sortBy.field" (selectionChange)="onSortChange($event, 'field')">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let option of sortByOptions" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="sortBy && sortBy.field">
+                <mat-label>Direction</mat-label>
+                <mat-select [value]="sortBy && sortBy.direction" (selectionChange)="onSortChange($event, 'direction')">
+                    <mat-option *ngFor="let option of sortDirectionOptions" [value]="option">
+                        {{option | titlecase}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
     </div>
 
-    <app-items-grid [items]="items" *ngIf="showAsGrid"></app-items-grid>
-    <app-items-tiles [items]="items" *ngIf="!showAsGrid"></app-items-tiles>
+    <app-items-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="showAsGrid"></app-items-grid>
+    <app-items-tiles [games]="games" *ngIf="!showAsGrid"></app-items-tiles>
 </div>

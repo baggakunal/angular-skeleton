@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  itemsList: "assets/items-list.json"
+  gamesList: "http://starlord.hackerearth.com/gamesext"
 };

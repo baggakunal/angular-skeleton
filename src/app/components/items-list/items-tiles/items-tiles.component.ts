@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, Input } from '@angular/core';
-import { ItemDetail } from '../../../app.entities';
+import { GameDetail } from '../../../app.entities';
 
 @Component({
   selector: 'app-items-tiles',
@@ -9,7 +9,7 @@ import { ItemDetail } from '../../../app.entities';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsTilesComponent implements OnInit {
-  @Input() items: Array<ItemDetail> = [];
+  @Input() games: Array<GameDetail> = [];
 
   constructor(
     private cdr: ChangeDetectorRef

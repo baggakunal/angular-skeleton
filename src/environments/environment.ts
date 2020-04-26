@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  itemsList: "assets/items-list.json"
+  gamesList: "http://starlord.hackerearth.com/gamesext"
 };
 
 /*
