@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ItemsListComponent } from './items-list.component';
+import { GamesListComponent } from './games-list.component';
 
-describe('ItemsTilesComponent', () => {
-  let component: ItemsListComponent;
-  let fixture: ComponentFixture<ItemsListComponent>;
+describe('GamesListComponent', () => {
+  let component: GamesListComponent;
+  let fixture: ComponentFixture<GamesListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ItemsListComponent],
+      declarations: [GamesListComponent],
       imports: [
         NoopAnimationsModule
       ]
@@ -17,7 +17,7 @@ describe('ItemsTilesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemsListComponent);
+    fixture = TestBed.createComponent(GamesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

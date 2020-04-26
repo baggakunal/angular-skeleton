@@ -49,7 +49,7 @@ const GAME_FIELD_CONFIG: Array<GameFieldConfig> = [
 ];
 
 @Injectable()
-export class ItemsListService {
+export class GamesListService {
     private games: Array<GameDetail>;
 
     private _gameFieldConfig: { array: Array<GameFieldConfig>, map: { [key in GameFieldName]?: GameFieldConfig } };
@@ -89,9 +89,9 @@ export class ItemsListService {
         });
     }
 
-    getItemsList(sortBy: SortBy, searchTerm?: string): Observable<{ filteredGames: Array<GameDetail>, autoCompleteGames: Array<GameDetail> }> {
+    getGamesList(sortBy: SortBy, searchTerm?: string): Observable<{ filteredGames: Array<GameDetail>, autoCompleteGames: Array<GameDetail> }> {
         if (!this.games || !this.games.length) {
-            return this.dataService.getItemsList().pipe(
+            return this.dataService.getGamesList().pipe(
                 map((games: Array<GameDetail>) => {
                     if (!games || !games.length) {
                         return { filteredGames: [], autoCompleteGames: [] };

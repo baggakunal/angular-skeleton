@@ -7,7 +7,7 @@ import { environment } from "../../environments/environment";
 export class DataService {
   constructor(private httpClient: HttpClient) { }
 
-  getItemsList(): Observable<any> {
+  getGamesList(): Observable<any> {
     return this.httpClient.get(environment.gamesList);
   }
 }

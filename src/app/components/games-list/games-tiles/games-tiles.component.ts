@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRe
 import { GameDetail } from '../../../app.entities';
 
 @Component({
-  selector: 'app-items-tiles',
-  templateUrl: './items-tiles.component.html',
-  styleUrls: ['./items-tiles.component.scss'],
+  selector: 'app-games-tiles',
+  templateUrl: './games-tiles.component.html',
+  styleUrls: ['./games-tiles.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

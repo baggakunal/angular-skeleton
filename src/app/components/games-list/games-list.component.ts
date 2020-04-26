@@ -3,20 +3,20 @@ import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subject } from "rxjs";
 import { takeUntil, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
-import { ItemsListService } from "./items-list.service";
+import { GamesListService } from "./games-list.service";
 import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-list.entities";
 import { GameDetail } from "../../app.entities";
 import { detectViewChanges } from "../../services/utility";
 
 @Component({
-    selector: 'app-items-list',
-    templateUrl: './items-list.component.html',
-    styleUrls: ['./items-list.component.scss'],
+    selector: 'app-games-list',
+    templateUrl: './games-list.component.html',
+    styleUrls: ['./games-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [ItemsListService]
+    providers: [GamesListService]
 })
-export class ItemsListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GamesListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild("autoComplete") private autoComplete: ElementRef;
 
     private unsubscriber: Subject<any> = new Subject();
@@ -49,7 +49,7 @@ export class ItemsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     constructor(
-        private itemsListService: ItemsListService,
+        private itemsListService: GamesListService,
         private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
@@ -59,7 +59,7 @@ export class ItemsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.loadData.pipe(
             switchMap((event: { sortBy: SortBy; searchTerm: string }) => {
-                return this.itemsListService.getItemsList(event && event.sortBy, event && event.searchTerm);
+                return this.itemsListService.getGamesList(event && event.sortBy, event && event.searchTerm);
             }),
             takeUntil(this.unsubscriber)
         ).subscribe(data => {

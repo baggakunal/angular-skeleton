@@ -1,4 +1,4 @@
-<div class="items-list-container">
+<div class="games-list-container">
     <div class="action-container">
         <div class="game-search">
             <mat-form-field>
@@ -36,6 +36,6 @@
         </div>
     </div>
 
-    <app-items-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="showAsGrid"></app-items-grid>
-    <app-items-tiles [games]="games" *ngIf="!showAsGrid"></app-items-tiles>
+    <app-games-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="showAsGrid"></app-games-grid>
+    <app-games-tiles [games]="games" *ngIf="!showAsGrid"></app-games-tiles>
 </div>
