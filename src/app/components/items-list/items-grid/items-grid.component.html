@@ -1,0 +1,103 @@
+<!-- <div class="game-list-container">
+    <div class="game-row header-row">
+        <div class="col game-rank">
+            Rank
+        </div>
+        <div class="col game-name">
+            Name
+        </div>
+        <div class="col game-platform">
+            Platform
+        </div>
+        <div class="col game-year">
+            Year
+        </div>
+        <div class="col game-genre">
+            Genre
+        </div>
+        <div class="col game-publisher">
+            Publisher
+        </div>
+        <div class="col game-global-sales">
+            Global Sales
+        </div>
+    </div>
+
+    <div class="game-row" *ngFor="let game of items">
+        <div class="col game-rank">
+            <span [title]="game.Rank">{{game.Rank}}</span>
+        </div>
+        <div class="col game-name">
+            <span [title]="game.Name">{{game.Name}}</span>
+        </div>
+        <div class="col game-platform">
+            <span [title]="game.Platform">{{game.Platform}}</span>
+        </div>
+        <div class="col game-year">
+            <span [title]="game.Year">{{game.Year}}</span>
+        </div>
+        <div class="col game-genre">
+            <span [title]="game.Genre">{{game.Genre}}</span>
+        </div>
+        <div class="col game-publisher">
+            <span [title]="game.Publisher">{{game.Publisher}}</span>
+        </div>
+        <div class="col game-global-sales">
+            <span [title]="game.Global_Sales">{{game.Global_Sales}}</span>
+        </div>
+    </div>
+</div> -->
+
+<div class="flex-grid">
+    <div class="grid-header">
+        <div class="row">
+            <div class="col col-1">
+                <span>Rank</span>
+            </div>
+            <div class="col col-4 game-name">
+                <span>Name</span>
+            </div>
+            <div class="col col-2">
+                <span>Platform</span>
+            </div>
+            <div class="col col-1">
+                <span>Year</span>
+            </div>
+            <div class="col col-2">
+                <span>Genre</span>
+            </div>
+            <div class="col col-3 game-publisher">
+                <span>Publisher</span>
+            </div>
+            <div class="col col-2 game-global-sales">
+                <span>Global Sales</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-body">
+        <div class="row" *ngFor="let game of items">
+            <div class="col col-1">
+                <span [title]="game.Rank">{{game.Rank}}</span>
+            </div>
+            <div class="col col-4 game-name">
+                <span [title]="game.Name">{{game.Name}}</span>
+            </div>
+            <div class="col col-2">
+                <span [title]="game.Platform">{{game.Platform}}</span>
+            </div>
+            <div class="col col-1">
+                <span [title]="game.Year">{{game.Year}}</span>
+            </div>
+            <div class="col col-2">
+                <span [title]="game.Genre">{{game.Genre}}</span>
+            </div>
+            <div class="col col-3 game-publisher">
+                <span [title]="game.Publisher">{{game.Publisher}}</span>
+            </div>
+            <div class="col col-2 game-global-sales">
+                <span [title]="game.Global_Sales">{{game.Global_Sales}}</span>
+            </div>
+        </div>
+    </div>
+</div>

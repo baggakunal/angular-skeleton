@@ -12,18 +12,10 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 2;
 }
 
 .router-outlet-container {
   margin-top: 64px;
   height: calc(100vh - 64px);
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 767px) {
-
-}
-
-@media screen and (max-width: 575px) {
-  
 }

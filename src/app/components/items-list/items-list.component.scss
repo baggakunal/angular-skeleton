@@ -1,12 +1,78 @@
 :host {
-    height: 100%;
+  height: 100%;
 }
 
 app-items-list {
-    .items-list-container {
-        height: 100%;
-        width: 100%;  
-        padding: 20px;
-        box-sizing: border-box;
+  .items-list-container {
+    height: 100%;
+    width: 100%;  
+    padding: 20px;
+    box-sizing: border-box;
+
+    .action-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      
+      .game-search {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        mat-form-field {
+          width: 300px;
+        }
+
+        button {
+          margin-left: 5px;
+          margin-bottom: 8px;
+
+          span {
+            height: 30px;
+            display: flex;
+            align-items: center;
+          }
+        }
+      
+        .auto-complete {
+          max-height: 210px;
+          width: 400px;
+          position: absolute;
+          top: 26px;
+          left: 60px;
+          background: white;
+          border: 1px solid;
+          overflow-x: hidden;
+          overflow-y: auto;
+
+          &-row {
+            height: 30px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            &:nth-child(even) {
+              background: lightblue;
+            }
+
+            &:hover {
+              background: #adc6e6;
+            }
+          }
+        }
+      }
+
+      .game-sort {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        
+        > select {
+          margin-left: 5px;
+        }
+      }
     }
+  }
 }

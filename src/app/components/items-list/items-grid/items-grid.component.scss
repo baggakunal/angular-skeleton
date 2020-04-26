@@ -1,0 +1,142 @@
+app-items-grid {
+  .flex-grid {
+    height: calc(100% - 40px);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    overflow: auto;
+
+    .grid-header, .grid-body {
+      width: 100%;
+
+      .row {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        border-bottom: 1px solid gray;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .col {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin-right: 10px;
+          overflow: hidden;
+
+          span {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          &:first-child {
+            padding-left: 15px;
+          }
+        }
+
+        @for $i from 1 through 10 {
+          .col-#{$i} {
+            flex: $i;
+          }
+        }
+      }
+    }
+
+    .grid-header {
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid gray;
+
+      .row {
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: bold;
+        background: white;
+        z-index: 1;
+      }
+    }
+  }
+
+  
+
+  /* Small Devices */
+  @media (max-width: 767px) {
+    .flex-grid {
+      .grid-header {
+        display: none;
+      }
+
+      .grid-header, .grid-body {
+        .row {
+          height: unset;
+          flex-direction: column;
+          .col {
+            display: block;
+            padding-left: 15px;
+
+            span {
+              height: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Medium Devices */
+  @media (min-width: 768px) {
+    .flex-grid {
+      .grid-header, .grid-body {
+        .row {  
+          .col {
+            &.game-name {
+              min-width: 200px;
+            }
+  
+            &.game-publisher {
+              min-width: 100px;
+            }
+  
+            &.game-global-sales {
+              min-width: 60px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Large Devices */
+  @media (min-width: 992px) {
+    .flex-grid {
+      .grid-header, .grid-body {
+        .row {  
+          .col {
+            &.game-name {
+              min-width: 300px;
+            }
+  
+            &.game-publisher {
+              min-width: 200px;
+            }
+  
+            &.game-global-sales {
+              min-width: 100px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
