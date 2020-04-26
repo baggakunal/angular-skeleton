@@ -1,0 +1,12 @@
+:host {
+    height: 100%;
+}
+
+app-items-list {
+    .items-list-container {
+        height: 100%;
+        width: 100%;  
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
