@@ -54,12 +54,21 @@ app-games-grid {
           &.game-editors-choice {
             flex: 3;
 
-            span {
-              display: none;
-              
-              &.Y {
-                font-weight: bold;
+            > span {
+              display: flex;
+              align-items: center;
+
+              img {
+                margin-right: 10px;
               }
+            }
+          }
+
+          &.numeric {
+            margin-right: 20px;
+            
+            > span {
+              text-align: right;
             }
           }
         }

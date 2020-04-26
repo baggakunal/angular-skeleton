@@ -22,6 +22,6 @@ export interface GameFieldConfig {
     fieldName: string;
     headerName: string;
     fieldType: 'string' | 'numeric';
-    sortEnabled: boolean;
+    sortEnabled?: boolean;
     className?: string;
 }

@@ -2,13 +2,11 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRe
 import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subject } from "rxjs";
-import { takeUntil, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 import { GamesListService } from "./games-list.service";
 import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-list.entities";
 import { GameDetail } from "../../app.entities";
 import { detectViewChanges } from "../../services/utility";
-
-import { faAward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-games-list',

@@ -18,9 +18,9 @@
                     <div class="col {{fieldConfig.className}} {{fieldConfig.fieldType}}">
                         <ng-container *ngIf="fieldConfig.fieldName == 'editors_choice'">
                             <ng-container *ngIf="game[fieldConfig.fieldName] == 'Y'">
-                                <span [title]="Editor\'s Choice">
-                                    Editor's Choice
+                                <span title="Editor's Choice">
                                     <img width="20" alt="Editor's Choice" src="assets/icons/award.png" />
+                                    <span>Editor's Choice</span>
                                 </span>
                             </ng-container>
                         </ng-container>

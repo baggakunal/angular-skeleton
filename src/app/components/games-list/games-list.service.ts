@@ -37,7 +37,6 @@ const GAME_FIELD_CONFIG: Array<GameFieldConfig> = [
         fieldName: GameFieldName.editors_choice,
         headerName: "Editors Choice",
         fieldType: 'string',
-        sortEnabled: true,
         className: 'game-editors-choice'
     },
     {
