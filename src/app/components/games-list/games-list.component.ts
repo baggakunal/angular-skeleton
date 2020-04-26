@@ -8,6 +8,8 @@ import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-l
 import { GameDetail } from "../../app.entities";
 import { detectViewChanges } from "../../services/utility";
 
+import { faAward } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
     selector: 'app-games-list',
     templateUrl: './games-list.component.html',
@@ -21,6 +23,7 @@ export class GamesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private unsubscriber: Subject<any> = new Subject();
     private loadData: Subject<{ sortBy: SortBy; searchTerm?: string; }> = new Subject();
+    isLoading: boolean = true;
     gameFieldConfig: { array: Array<GameFieldConfig>, map: { [key in GameFieldName]?: GameFieldConfig } };
     games: Array<GameDetail> = [];
     autoCompleteList: Array<GameDetail> = [];
@@ -65,6 +68,7 @@ export class GamesListComponent implements OnInit, AfterViewInit, OnDestroy {
         ).subscribe(data => {
             this.games = Object.assign([], data && data.filteredGames) || [];
             this.autoCompleteList = data && data.autoCompleteGames;
+            this.isLoading = false;
             detectViewChanges(this.cdr);
         });
 

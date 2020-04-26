@@ -75,6 +75,15 @@ app-games-list {
         }
       }
     }
+
+    .mat-spinner-container {
+      min-height: 100px;
+      height: calc(100% - 50px);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   /* Small Devices */

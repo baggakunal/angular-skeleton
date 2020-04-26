@@ -53,6 +53,14 @@ app-games-grid {
 
           &.game-editors-choice {
             flex: 3;
+
+            span {
+              display: none;
+              
+              &.Y {
+                font-weight: bold;
+              }
+            }
           }
         }
       }

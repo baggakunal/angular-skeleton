@@ -110,12 +110,13 @@ export class GamesListService {
             return { filteredGames: [], autoCompleteGames: [] };
         }
 
+        const shallowCopyGames = Object.assign([], this.games);
         let filteredGames: Array<GameDetail> = [], autoCompleteGames: Array<GameDetail> = [];
         if (searchTerm == null || searchTerm.trim() === "") {
-            filteredGames = this.games;
+            filteredGames = shallowCopyGames;
         } else {
             searchTerm = searchTerm.toLowerCase();
-            filteredGames = this.games.filter((game: GameDetail) => {
+            filteredGames = shallowCopyGames.filter((game: GameDetail) => {
                 if (!game || !game.title) {
                     return false;
                 }

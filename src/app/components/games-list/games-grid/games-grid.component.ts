@@ -18,4 +18,8 @@ export class GamesGridComponent implements OnInit {
     ) { }
 
     ngOnInit() { }
+
+    trackByGame(game: GameDetail) {
+        return game && game.title;
+    }
 }

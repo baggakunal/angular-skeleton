@@ -12,11 +12,21 @@
     </div>
 
     <div class="grid-body">
-        <div class="row" *ngFor="let game of games">
+        <div class="row" *ngFor="let game of games; trackBy: trackByGame">
             <ng-container *ngFor="let fieldConfig of gameFieldConfig.array">
                 <ng-container *ngIf="fieldConfig">
                     <div class="col {{fieldConfig.className}} {{fieldConfig.fieldType}}">
-                        <span [title]="game.fieldName">{{game[fieldConfig.fieldName]}}</span>
+                        <ng-container *ngIf="fieldConfig.fieldName == 'editors_choice'">
+                            <ng-container *ngIf="game[fieldConfig.fieldName] == 'Y'">
+                                <span [title]="Editor\'s Choice">
+                                    Editor's Choice
+                                    <img width="20" alt="Editor's Choice" src="assets/icons/award.png" />
+                                </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="fieldConfig.fieldName != 'editors_choice'">
+                            <span [title]="game[fieldConfig.fieldName]">{{game[fieldConfig.fieldName]}}</span>
+                        </ng-container>
                     </div>
                 </ng-container>
             </ng-container>
