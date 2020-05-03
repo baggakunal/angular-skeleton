@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GamesListComponent } from './components/games-list/games-list.component';
+import { GamesComponent } from './components/games/games.component';
 
 const routes: Routes = [
   {
     path: 'games',
-    component: GamesListComponent
+    component: GamesComponent
   },
   {
     path: '',

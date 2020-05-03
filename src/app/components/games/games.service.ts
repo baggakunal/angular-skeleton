@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { DataService } from "../../services/data.service";
-import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-list.entities";
+import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games.entities";
 import { GameDetail } from "../../app.entities";
 import { map } from "rxjs/operators";
 
@@ -48,7 +48,7 @@ const GAME_FIELD_CONFIG: Array<GameFieldConfig> = [
 ];
 
 @Injectable()
-export class GamesListService {
+export class GamesService {
     private games: Array<GameDetail>;
 
     private _gameFieldConfig: { array: Array<GameFieldConfig>, map: { [key in GameFieldName]?: GameFieldConfig } };

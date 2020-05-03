@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { GamesGridComponent } from './games-grid.component';
+import { GridComponent } from './grid.component';
 
-describe('GamesGridComponent', () => {
-  let component: GamesGridComponent;
-  let fixture: ComponentFixture<GamesGridComponent>;
+describe('GridComponent', () => {
+  let component: GridComponent;
+  let fixture: ComponentFixture<GridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GamesGridComponent],
+      declarations: [GridComponent],
       imports: [
         NoopAnimationsModule
       ]
@@ -17,7 +17,7 @@ describe('GamesGridComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GamesGridComponent);
+    fixture = TestBed.createComponent(GridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

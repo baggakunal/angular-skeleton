@@ -15,14 +15,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { DataService } from './services/data.service';
 
 import { AppComponent } from './app.component';
-import { GamesListComponent } from './components/games-list/games-list.component';
-import { GamesGridComponent } from './components/games-list/games-grid/games-grid.component';
+import { GamesComponent } from './components/games/games.component';
+import { GridComponent } from './components/games/grid/grid.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        GamesListComponent,
-        GamesGridComponent
+        GamesComponent,
+        GridComponent
     ],
     imports: [
         BrowserModule,

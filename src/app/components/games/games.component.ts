@@ -3,20 +3,20 @@ import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subject } from "rxjs";
 import { takeUntil, debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { GamesListService } from "./games-list.service";
-import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games-list.entities";
+import { GamesService } from "./games.service";
+import { GameFieldName, SortDirection, SortBy, GameFieldConfig } from "./games.entities";
 import { GameDetail } from "../../app.entities";
 import { detectViewChanges } from "../../services/utility";
 
 @Component({
-    selector: 'app-games-list',
-    templateUrl: './games-list.component.html',
-    styleUrls: ['./games-list.component.scss'],
+    selector: 'app-games',
+    templateUrl: './games.component.html',
+    styleUrls: ['./games.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [GamesListService]
+    providers: [GamesService]
 })
-export class GamesListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild("autoComplete") private autoComplete: ElementRef;
 
     private unsubscriber: Subject<any> = new Subject();
@@ -50,7 +50,7 @@ export class GamesListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     constructor(
-        private itemsListService: GamesListService,
+        private itemsListService: GamesService,
         private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
