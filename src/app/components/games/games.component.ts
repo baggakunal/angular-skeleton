@@ -30,16 +30,11 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     sortBy: SortBy = null;
     showAutoComplete: boolean = false;
     searchTerm: FormControl = new FormControl(null);
-    showAsGrid: boolean = true;
+    viewMode: 'grid' | 'tiles' = 'tiles';
 
     @HostListener("document:click")
     documentClick(event) {
-        if (
-            !this.autoComplete ||
-            !this.autoComplete.nativeElement ||
-            !event ||
-            !event.target
-        ) {
+        if (!this.autoComplete || !this.autoComplete.nativeElement || !event || !event.target) {
             this.showAutoComplete = false;
             return;
         }
@@ -50,17 +45,18 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     constructor(
-        private itemsListService: GamesService,
-        private cdr: ChangeDetectorRef) { }
+        private gamesService: GamesService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
     ngOnInit() {
-        this.gameFieldConfig = this.itemsListService.gameFieldConfig;
-        this.sortByOptions = this.itemsListService.sortByOptions;
-        this.sortDirectionOptions = this.itemsListService.sortDirectionOptions;
+        this.gameFieldConfig = this.gamesService.gameFieldConfig;
+        this.sortByOptions = this.gamesService.sortByOptions;
+        this.sortDirectionOptions = this.gamesService.sortDirectionOptions;
 
         this.loadData.pipe(
             switchMap((event: { sortBy: SortBy; searchTerm: string }) => {
-                return this.itemsListService.getGamesList(event && event.sortBy, event && event.searchTerm);
+                return this.gamesService.getGamesList(event && event.sortBy, event && event.searchTerm);
             }),
             takeUntil(this.unsubscriber)
         ).subscribe(data => {

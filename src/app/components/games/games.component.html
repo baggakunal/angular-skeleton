@@ -1,20 +1,21 @@
 <div class="games-container">
     <div class="action-container">
-        <div class="game-search">
-            <mat-form-field>
-                <input matInput placeholder="Search" [formControl]="searchTerm" [disabled]="isLoading">
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="clearSearch()" [disabled]="isLoading">Clear</button>
-
-            <div #autoComplete class="auto-complete"
-                [hidden]="!searchTerm || !showAutoComplete || !autoCompleteList || !autoCompleteList.length || autoCompleteList.length < 2">
-                <div class="auto-complete-option" *ngFor="let game of autoCompleteList" (click)="selectGame(game)">
-                    {{game.title}} ({{game.platform}})
+        <div class="search-container">
+            <div class="serach-input">
+                <mat-form-field>
+                    <input matInput placeholder="Search" [formControl]="searchTerm" [disabled]="isLoading">
+                </mat-form-field>
+                <div #autoComplete class="auto-complete"
+                    [hidden]="!searchTerm || !showAutoComplete || !autoCompleteList || !autoCompleteList.length || autoCompleteList.length < 2">
+                    <div class="auto-complete-option" *ngFor="let game of autoCompleteList" (click)="selectGame(game)">
+                        {{game.title}} ({{game.platform}})
+                    </div>
                 </div>
             </div>
+            <button mat-raised-button color="primary" (click)="clearSearch()" [disabled]="isLoading">Clear</button>
         </div>
 
-        <div class="game-sort">
+        <div class="sort-container">
             <mat-form-field>
                 <mat-label>Sort By</mat-label>
                 <mat-select (selectionChange)="onSortChange($event, 'field')" [disabled]="isLoading">
@@ -35,6 +36,18 @@
                 </mat-select>
             </mat-form-field>
         </div>
+
+        <div class="view-switch-container">
+            <mat-button-toggle-group name="viewMode" appearance="legacy" aria-label="View Mode" [value]="viewMode"
+                (change)="viewMode = $event && $event.value">
+                <mat-button-toggle value="grid">
+                    <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="tiles">
+                    <fa-icon [icon]="['fas', 'th']"></fa-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
     </div>
 
     <div class="mat-spinner-container" *ngIf="isLoading">
@@ -42,7 +55,7 @@
     </div>
 
     <ng-container *ngIf="!isLoading">
-        <app-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="showAsGrid"></app-grid>
-        <app-tiles [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="!showAsGrid"></app-tiles>
+        <app-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="viewMode == 'grid'"></app-grid>
+        <app-tiles [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="viewMode == 'tiles'"></app-tiles>
     </ng-container>
 </div>

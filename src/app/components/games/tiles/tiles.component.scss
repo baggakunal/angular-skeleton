@@ -6,54 +6,22 @@ app-tiles {
     flex-flow: row wrap;
     justify-content: center;
     overflow: auto;
-
-    .tile {
-      height: 300px;
-      width: 250px;
-      display: flex;
-      margin: 10px;
-      border-radius: 5px;
-      box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
-
-      .tile-image {
-        height: 220px;
-        width: 100%;
-        border-bottom: 1px solid gray;
-      }
-    }
   }  
 
   /* Small Devices */
   @media (max-width: 767px) {
     .tiles-container {
       max-height: calc(100% - 110px);
-    //   .tile {
-    //     .tile-image {
-
-    //     }
-    //   }
     }
   }
 
   /* Medium Devices */
   @media (min-width: 768px) {
-    // .tiles-container {
-    //   .tile {
-    //     .tile-image {
-
-    //     }
-    //   }
-    // }
+    
   }
 
   /* Large Devices */
   @media (min-width: 992px) {
-    // .tiles-container {
-    //   .tile {
-    //     .tile-image {
-
-    //     }
-    //   }
-    // }
+    
   }
 }

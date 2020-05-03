@@ -1,22 +1,4 @@
 <div class="tiles-container" *ngIf="gameFieldConfig">
-    <div class="tile" *ngFor="let game of games; trackBy: trackByGame">
-        <div class="tile-image"></div>
-        <!-- <ng-container *ngFor="let fieldConfig of gameFieldConfig.array">
-            <ng-container *ngIf="fieldConfig">
-                <div class="col {{fieldConfig.className}} {{fieldConfig.fieldType}}">
-                    <ng-container *ngIf="fieldConfig.fieldName == 'editors_choice'">
-                        <ng-container *ngIf="game[fieldConfig.fieldName] == 'Y'">
-                            <span title="Editor's Choice">
-                                <img width="20" alt="Editor's Choice" src="assets/icons/award.png" />
-                                <span>Editor's Choice</span>
-                            </span>
-                        </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="fieldConfig.fieldName != 'editors_choice'">
-                        <span [title]="game[fieldConfig.fieldName]">{{game[fieldConfig.fieldName]}}</span>
-                    </ng-container>
-                </div>
-            </ng-container>
-        </ng-container> -->
-    </div>
+    <app-tile [gameFieldConfig]="gameFieldConfig" [game]="game" *ngFor="let game of games; trackBy: trackByGame">
+    </app-tile>
 </div>
