@@ -71,7 +71,10 @@ app-games {
         
         mat-form-field {
           width: 100px;
-          margin-left: 10px;
+
+          &:not(:first-child) {
+            margin-left: 10px;
+          }
         }
       }
     }
@@ -88,8 +91,16 @@ app-games {
 
   /* Small Devices */
   @media (max-width: 767px) {
-    .action-container {
-      flex-direction: column;
+    .games-container {  
+      .action-container {
+        flex-direction: column;
+  
+        .game-search {
+          mat-form-field {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }

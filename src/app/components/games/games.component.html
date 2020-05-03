@@ -43,5 +43,6 @@
 
     <ng-container *ngIf="!isLoading">
         <app-grid [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="showAsGrid"></app-grid>
+        <app-tiles [gameFieldConfig]="gameFieldConfig" [games]="games" *ngIf="!showAsGrid"></app-tiles>
     </ng-container>
 </div>

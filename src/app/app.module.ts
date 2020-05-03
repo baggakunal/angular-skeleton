@@ -17,12 +17,14 @@ import { DataService } from './services/data.service';
 import { AppComponent } from './app.component';
 import { GamesComponent } from './components/games/games.component';
 import { GridComponent } from './components/games/grid/grid.component';
+import { TilesComponent } from './components/games/tiles/tiles.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         GamesComponent,
-        GridComponent
+        GridComponent,
+        TilesComponent
     ],
     imports: [
         BrowserModule,

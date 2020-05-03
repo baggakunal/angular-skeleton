@@ -94,6 +94,8 @@ app-grid {
   /* Small Devices */
   @media (max-width: 767px) {
     .flex-grid {
+      max-height: calc(100% - 110px);
+      
       .grid-header {
         display: none;
       }
