@@ -3,7 +3,7 @@
 // To keep things simple it does the bare minimum to support the example.
 import alasql from 'alasql';
 
-export function FakeServer(allData) {
+export function FakeServer(data: { totalRecords: number, olympicWinners: Array<any> }) {
     alasql.options.cache = false;
 
     return {
@@ -12,7 +12,7 @@ export function FakeServer(allData) {
             return {
                 success: true,
                 rows: results,
-                lastRow: getLastRowIndex(request, results),
+                lastRow: data.totalRecords
             };
         },
     };
@@ -22,7 +22,7 @@ export function FakeServer(allData) {
 
         console.log('[FakeServer] - about to execute query:', SQL);
 
-        return alasql(SQL, [allData]);
+        return alasql(SQL, [data.olympicWinners]);
     }
 
     function buildSql(request) {
@@ -138,13 +138,5 @@ export function FakeServer(allData) {
     function limitSql(request) {
         var blockSize = request.endRow - request.startRow;
         return ' LIMIT ' + (blockSize + 1) + ' OFFSET ' + request.startRow;
-    }
-
-    function getLastRowIndex(request, results) {
-        if (!results || results.length === 0) {
-            return request.startRow;
-        }
-        var currentLastRow = request.startRow + results.length;
-        return currentLastRow <= request.endRow ? currentLastRow : -1;
     }
 }

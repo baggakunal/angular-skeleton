@@ -1,2 +1,4 @@
-<ag-grid-angular class="ag-theme-alpine" [modules]="modules" [gridOptions]="gridOptions" [rowData]="rowData">
-</ag-grid-angular>
+<ng-container *ngIf="initializeGrid">
+    <ag-grid-angular class="ag-theme-alpine" [modules]="modules" [gridOptions]="gridOptions" [rowData]="rowData">
+    </ag-grid-angular>
+</ng-container>
