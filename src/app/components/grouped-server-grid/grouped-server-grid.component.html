@@ -1,0 +1,5 @@
+<ng-container *ngIf="initializeGrid">
+    <ag-grid-angular class="ag-theme-alpine" [modules]="modules" [gridOptions]="gridOptions" [rowData]="rowData"
+        [suppressAggFuncInHeader]="true" [animateRows]="true">
+    </ag-grid-angular>
+</ng-container>

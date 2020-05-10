@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlainGridComponent } from './components/plain-grid/plain-grid.component';
 import { PlainServerGridComponent } from './components/plain-server-grid/plain-server-grid.component';
+import { GroupedServerGridComponent } from './components/grouped-server-grid/grouped-server-grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlainGridComponent,
-    PlainServerGridComponent
+    PlainServerGridComponent,
+    GroupedServerGridComponent
   ],
   imports: [
     BrowserModule,
