@@ -28,10 +28,100 @@ export function FakeServer(allData) {
     function buildSql(request) {
         var select = 'SELECT * ';
         var from = 'FROM ? ';
+        var where = whereSql(request);
         var orderBy = orderBySql(request);
         var limit = limitSql(request);
 
-        return select + from + orderBy + limit;
+        return select + from + where + orderBy + limit;
+    }
+
+    function whereSql(request) {
+        var whereParts = [];
+
+        var filterModel = request.filterModel;
+        if (filterModel) {
+            var keySet = Object.keys(filterModel);
+            keySet.forEach(function (key) {
+                var item = filterModel[key];
+                whereParts.push(filterSql(key, item));
+            });
+        }
+
+        if (whereParts.length > 0) {
+            return ' WHERE ' + whereParts.join(' AND ') + ' ';
+        }
+
+        return '';
+    }
+
+    function filterSql(key, item) {
+        switch (item.filterType) {
+            case 'text':
+                return createFilterSql(textFilterMapper, key, item);
+            case 'number':
+                return createFilterSql(numberFilterMapper, key, item);
+            default:
+                console.log('unknown filter type: ' + item.filterType);
+        }
+    }
+
+    function createFilterSql(mapper, key, item) {
+        if (item.operator) {
+            var condition1 = mapper(key, item.condition1);
+            var condition2 = mapper(key, item.condition2);
+            return '(' + condition1 + ' ' + item.operator + ' ' + condition2 + ')';
+        }
+        return mapper(key, item);
+    }
+
+    function textFilterMapper(key, item) {
+        switch (item.type) {
+            case 'equals':
+                return key + ' = "' + item.filter + '"';
+            case 'notEqual':
+                return key + ' != "' + item.filter + '"';
+            case 'contains':
+                return key + ' like "%' + item.filter + '%"';
+            case 'notContains':
+                return key + ' not like "%' + item.filter + '%"';
+            case 'startsWith':
+                return key + ' like "' + item.filter + '%"';
+            case 'endsWith':
+                return key + ' like "%' + item.filter + '"';
+            default:
+                console.log('unknown text filter type: ' + item.type);
+        }
+    }
+
+    function numberFilterMapper(key, item) {
+        switch (item.type) {
+            case 'equals':
+                return key + ' = ' + item.filter;
+            case 'notEqual':
+                return key + ' != ' + item.filter;
+            case 'greaterThan':
+                return key + ' > ' + item.filter;
+            case 'greaterThanOrEqual':
+                return key + ' >= ' + item.filter;
+            case 'lessThan':
+                return key + ' < ' + item.filter;
+            case 'lessThanOrEqual':
+                return key + ' <= ' + item.filter;
+            case 'inRange':
+                return (
+                    '(' +
+                    key +
+                    ' >= ' +
+                    item.filter +
+                    ' and ' +
+                    key +
+                    ' <= ' +
+                    item.filterTo +
+                    ')'
+                );
+            default:
+                console.log('unknown number filter type: ' + item.type);
+        }
     }
 
     function orderBySql(request) {
@@ -51,7 +141,9 @@ export function FakeServer(allData) {
     }
 
     function getLastRowIndex(request, results) {
-        if (!results || results.length === 0) return -1;
+        if (!results || results.length === 0) {
+            return request.startRow;
+        }
         var currentLastRow = request.startRow + results.length;
         return currentLastRow <= request.endRow ? currentLastRow : -1;
     }
