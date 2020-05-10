@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions } from 'ag-grid-community';
 
 @Component({
     selector: 'plain-grid',
@@ -9,14 +9,16 @@ import { GridOptions, ColDef } from 'ag-grid-community';
 })
 export class PlainGridComponent {
     gridOptions: GridOptions = {
-        embedFullWidthRows: true
+        columnDefs: [
+            { headerName: 'Make', field: 'make', sortable: true, filter: true },
+            { headerName: 'Model', field: 'model', sortable: true, filter: true },
+            { headerName: 'Price', field: 'price', sortable: true, filter: true }
+        ],
+        defaultColDef: {
+            flex: 1,
+            minWidth: 200
+        }
     };
-
-    columnDefs: Array<ColDef> = [
-        { headerName: 'Make', field: 'make', sortable: true, filter: true },
-        { headerName: 'Model', field: 'model', sortable: true, filter: true },
-        { headerName: 'Price', field: 'price', sortable: true, filter: true }
-    ];
 
     rowData = [
         { make: 'Toyota', model: 'Celica', price: 35000 },

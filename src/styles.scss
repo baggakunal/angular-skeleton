@@ -5,3 +5,8 @@
 .ag-theme-alpine {
     @include ag-theme-alpine();
 }
+
+ag-grid-angular {
+    height: calc(100vh - 16px);
+    width: 100%;
+}
